@@ -96,3 +96,11 @@ If you encounter database connection errors:
 
 - `LibsqlError: SERVER_ERROR: Server returned HTTP status 401` - Invalid authentication token
 - `LibsqlError: SERVER_ERROR: Server returned HTTP status 404` - Database not found
+
+### Production Data Not Showing
+
+If data is not showing in production:
+
+1. Ensure you have set the `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` environment variables in your Vercel project settings
+2. Check the Vercel deployment logs for any database connection errors
+3. Verify that your Turso database is accessible from the Vercel environment

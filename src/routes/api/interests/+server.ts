@@ -17,14 +17,19 @@ export const GET: RequestHandler = async () => {
     const sumTextbox4 = await getSumOfTextbox4();
     const difference = sumTextbox3 - sumTextbox4;
     
+    // Debug logging
+    console.log('Sum of Textbox 3:', sumTextbox3);
+    console.log('Sum of Textbox 4:', sumTextbox4);
+    console.log('Difference:', difference);
+    
     return json({
       success: true,
       data: {
         interests,
         summary: {
-          sumTextbox3,
-          sumTextbox4,
-          difference
+          sumTextbox3: Number(sumTextbox3),
+          sumTextbox4: Number(sumTextbox4),
+          difference: Number(difference)
         }
       }
     });
