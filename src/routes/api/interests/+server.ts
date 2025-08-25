@@ -1,0 +1,66 @@
+import { json, type RequestHandler } from '@sveltejs/kit';
+import { 
+  createInterest, 
+  getAllInterests, 
+  getInterestById, 
+  updateInterest, 
+  deleteInterest,
+  getSumOfTextbox3,
+  getSumOfTextbox4
+} from '$lib/database';
+import type { Interest } from '$lib/database';
+
+export const GET: RequestHandler = async () => {
+  try {
+    const interests = getAllInterests();
+    const sumTextbox3 = getSumOfTextbox3();
+    const sumTextbox4 = getSumOfTextbox4();
+    const difference = sumTextbox3 - sumTextbox4;
+    
+    return json({
+      success: true,
+      data: {
+        interests,
+        summary: {
+          sumTextbox3,
+          sumTextbox4,
+          difference
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching interests:', error);
+    return json({
+      success: false,
+      error: 'Failed to fetch interests'
+    }, { status: 500 });
+  }
+};
+
+export const POST: RequestHandler = async ({ request }) => {
+  try {
+    const data = await request.json();
+    const { textbox1, textbox2, textbox3, textbox4, textbox5 } = data;
+    
+    const newInterest = {
+      textbox1,
+      textbox2,
+      textbox3: Number(textbox3),
+      textbox4: Number(textbox4),
+      textbox5
+    };
+    
+    const id = createInterest(newInterest);
+    
+    return json({
+      success: true,
+      data: { id }
+    });
+  } catch (error) {
+    console.error('Error creating interest:', error);
+    return json({
+      success: false,
+      error: 'Failed to create interest'
+    }, { status: 500 });
+  }
+};
