@@ -12,9 +12,9 @@ import type { Interest } from '$lib/database';
 
 export const GET: RequestHandler = async () => {
   try {
-    const interests = getAllInterests();
-    const sumTextbox3 = getSumOfTextbox3();
-    const sumTextbox4 = getSumOfTextbox4();
+    const interests = await getAllInterests();
+    const sumTextbox3 = await getSumOfTextbox3();
+    const sumTextbox4 = await getSumOfTextbox4();
     const difference = sumTextbox3 - sumTextbox4;
     
     return json({
@@ -50,7 +50,7 @@ export const POST: RequestHandler = async ({ request }) => {
       textbox5
     };
     
-    const id = createInterest(newInterest);
+    const id = await createInterest(newInterest);
     
     return json({
       success: true,

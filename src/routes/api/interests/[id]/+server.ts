@@ -5,7 +5,7 @@ import type { Interest } from '$lib/database';
 export const GET: RequestHandler = async ({ params }) => {
   try {
     const { id } = params;
-    const interest = getInterestById(Number(id));
+    const interest = await getInterestById(Number(id));
     
     if (!interest) {
       return json({
@@ -41,7 +41,7 @@ export const PUT: RequestHandler = async ({ params, request }) => {
       textbox5
     };
     
-    const result = updateInterest(Number(id), updatedInterest);
+    const result = await updateInterest(Number(id), updatedInterest);
     
     if (result === 0) {
       return json({
@@ -66,7 +66,7 @@ export const PUT: RequestHandler = async ({ params, request }) => {
 export const DELETE: RequestHandler = async ({ params }) => {
   try {
     const { id } = params;
-    const result = deleteInterest(Number(id));
+    const result = await deleteInterest(Number(id));
     
     if (result === 0) {
       return json({
