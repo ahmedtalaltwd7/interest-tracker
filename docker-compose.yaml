@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    container_name: interest-tracker-app
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - NODE_ENV=development
+    command: ["npm", "run", "dev", "--", "--host"]
+    depends_on:
+      - db
+  db:
+    image: sqlite
+    container_name: interest-tracker-db
+    volumes:
+      - ./interests.db:/data/interests.db
+    environment:
+      - SQLITE_DATABASE=interests.db
+    command: ["sqlite3", "/data/interests.db"]
+# Notes:
+# - This setup assumes your app runs on port 5173 (Vite default). Adjust as needed.
+# - SQLite is used as a file-based DB, so the volume mounts the DB file.
+# - For production, consider using a more robust DB and production build commands.
